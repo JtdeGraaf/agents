@@ -1,0 +1,40 @@
+{
+  "name": "graaf",
+  "description": "Jt de Graaf's agent skills: house style, architecture guidelines per stack, and app-shipping workflows.",
+  "owner": {
+    "name": "Jt de Graaf",
+    "url": "https://agents.graaf.dev"
+  },
+  "plugins": [
+    {
+      "name": "house-style",
+      "source": "./plugins/house-style",
+      "description": "Language-agnostic house style: flat control flow, rare short comments, coded errors, no silent defaults, deliberate tests.",
+      "category": "guidelines"
+    },
+    {
+      "name": "spring-slices",
+      "source": "./plugins/spring-slices",
+      "description": "Spring Boot backends as DDD feature slices: thin controllers, services own the flow, domain owns invariants.",
+      "category": "guidelines"
+    },
+    {
+      "name": "react-slices",
+      "source": "./plugins/react-slices",
+      "description": "React + TypeScript SPAs by responsibility: thin routes, feature slices, generated API client, components that only render.",
+      "category": "guidelines"
+    },
+    {
+      "name": "godot-netplay",
+      "source": "./plugins/godot-netplay",
+      "description": "Multiplayer games: an engine-free .NET host library plus a Godot C# client that only renders and wires.",
+      "category": "guidelines"
+    },
+    {
+      "name": "launchpad",
+      "source": "./plugins/launchpad",
+      "description": "Ship a frontend-only app from one prompt: idea, unique design, GitHub repo, Cloudflare deploy on <slug>.graaf.dev.",
+      "category": "workflows"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "spring-slices",
+  "displayName": "Spring Slices",
+  "version": "1.0.0",
+  "description": "Spring Boot backends as DDD feature slices: thin controllers, services own the flow, domain owns invariants.",
+  "author": { "name": "Jt de Graaf", "url": "https://agents.graaf.dev" },
+  "homepage": "https://agents.graaf.dev/#spring-slices",
+  "repository": "https://github.com/JtdeGraaf/agents",
+  "license": "MIT",
+  "keywords": ["java", "spring-boot", "ddd", "architecture"],
+  "dependencies": ["house-style"]
+}

@@ -1,0 +1,618 @@
+:root {
+  --paper: #123673; /* blueprint ground */
+  --paper-deep: #0d2a5c;
+  --line: #e8f0ff; /* white line work */
+  --line-soft: #a9c2ee;
+  --line-faint: rgb(232 240 255 / 0.16);
+  --grid: rgb(232 240 255 / 0.06);
+  --grid-major: rgb(232 240 255 / 0.11);
+  --redline: #ff6b57; /* checker's red pencil */
+  --cyan: #8fe0ff;
+
+  --display: 'Barlow Condensed', 'Arial Narrow', system-ui, sans-serif;
+  --body: 'Barlow', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--grid-major) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+  color: var(--line);
+  font-family: var(--body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+a {
+  color: var(--cyan);
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: var(--line);
+}
+
+:focus-visible {
+  outline: 2px solid var(--redline);
+  outline-offset: 3px;
+}
+
+code {
+  font-family: var(--mono);
+  font-size: 0.86em;
+}
+
+/* Layout: the sheet index on the left, the sheet on the right, both inside a drawing border. */
+.drawing {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 28px;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 28px 24px 48px;
+}
+
+.index {
+  position: sticky;
+  top: 28px;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-height: calc(100vh - 56px);
+  overflow-y: auto;
+  padding: 18px 16px;
+  border: 1.5px solid var(--line-soft);
+  outline: 1px solid var(--line-faint);
+  outline-offset: 4px;
+  background: rgb(13 42 92 / 0.7);
+}
+
+.index-home {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--line);
+  text-decoration: none;
+  font-family: var(--display);
+  font-size: 1.45rem;
+  line-height: 1;
+}
+
+.index-home strong {
+  font-weight: 700;
+}
+
+.index-mark {
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--line);
+  background: linear-gradient(135deg, transparent 45%, var(--redline) 45% 55%, transparent 55%);
+  flex: none;
+}
+
+.index-sheets,
+.index-files {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.index-sheets > li + li {
+  border-top: 1px dashed var(--line-faint);
+}
+
+.index-sheets a {
+  display: block;
+  padding: 7px 6px;
+  color: var(--line-soft);
+  text-decoration: none;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 1.12rem;
+}
+
+.index-sheets a:hover,
+.index-sheets a[aria-current='page'] {
+  color: var(--line);
+}
+
+.index-sheets a[aria-current='page'] {
+  box-shadow: inset 3px 0 0 var(--redline);
+}
+
+.sheet-no {
+  display: inline-block;
+  min-width: 3.4ch;
+  color: var(--cyan);
+  font-variant-numeric: tabular-nums;
+}
+
+.index-files {
+  margin: 0 0 8px 3.6ch;
+  border-left: 1px solid var(--line-faint);
+}
+
+.index-files a {
+  font-family: var(--body);
+  font-size: 0.86rem;
+  padding: 3px 10px;
+  word-break: break-word;
+}
+
+.index-repo {
+  margin-top: auto;
+  font-size: 0.85rem;
+  color: var(--line-soft);
+}
+
+/* The sheet */
+.sheet {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: calc(100vh - 76px);
+  border: 2px solid var(--line);
+  outline: 1px solid var(--line-faint);
+  outline-offset: 6px;
+  background: rgb(18 54 115 / 0.55);
+}
+
+.sheet-body {
+  flex: 1;
+  padding: 40px clamp(20px, 5vw, 56px) 48px;
+  max-width: 920px;
+}
+
+.sheet-head {
+  margin-bottom: 32px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--display);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--line);
+}
+
+.sheet-head h1 {
+  margin: 0 0 14px;
+  font-size: clamp(2.3rem, 5.5vw, 3.8rem);
+  font-weight: 700;
+  max-width: 18ch;
+}
+
+.lede {
+  margin: 0;
+  font-size: 1.2rem;
+  color: var(--line-soft);
+  max-width: 62ch;
+}
+
+section + section {
+  margin-top: 40px;
+}
+
+section > h2 {
+  margin: 0 0 14px;
+  font-size: 1.7rem;
+}
+
+/* Redline: the checker's annotations — install commands live here. */
+.redline {
+  position: relative;
+  padding: 18px 20px;
+  border: 1.5px dashed var(--redline);
+  border-radius: 2px;
+}
+
+.redline h2 {
+  margin: 0 0 12px;
+  font-size: 1.5rem;
+  color: var(--redline);
+}
+
+.steps {
+  margin: 0;
+  padding-left: 1.4em;
+  display: grid;
+  gap: 14px;
+}
+
+.steps li::marker {
+  font-family: var(--display);
+  color: var(--redline);
+  font-weight: 700;
+}
+
+.steps li > span {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--line-soft);
+}
+
+.note {
+  margin: 14px 0 0;
+  color: var(--line-soft);
+  font-size: 0.95rem;
+}
+
+.command {
+  display: flex;
+  align-items: stretch;
+  max-width: 100%;
+  border: 1px solid var(--line-soft);
+  background: var(--paper-deep);
+}
+
+.command code {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 14px;
+  overflow-x: auto;
+  white-space: nowrap;
+  color: var(--line);
+}
+
+.command button {
+  flex: none;
+  padding: 0 16px;
+  border: 0;
+  border-left: 1px solid var(--line-soft);
+  background: transparent;
+  color: var(--cyan);
+  font-family: var(--display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.command button:hover {
+  background: var(--line);
+  color: var(--paper);
+}
+
+/* Schedule table: like a drawing schedule */
+.schedule {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.98rem;
+}
+
+.schedule th,
+.schedule td {
+  padding: 10px 12px;
+  border: 1px solid var(--line-faint);
+  text-align: left;
+  vertical-align: top;
+}
+
+.schedule th {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--line-soft);
+  border-bottom: 1.5px solid var(--line-soft);
+}
+
+.schedule td:nth-child(2) a {
+  font-family: var(--display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+/* Plugin sheet: skills as detail callouts */
+.details {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+
+.detail {
+  padding: 16px 18px;
+  border-left: 3px solid var(--cyan);
+  background: rgb(13 42 92 / 0.55);
+}
+
+.detail-title {
+  font-family: var(--mono);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.detail p {
+  margin: 8px 0 0;
+  color: var(--line-soft);
+}
+
+.detail-files {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  font-size: 0.9rem;
+}
+
+.code,
+.prose pre {
+  margin: 0;
+  padding: 14px 16px;
+  overflow-x: auto;
+  border: 1px solid var(--line-faint);
+  background: var(--paper-deep);
+  font-size: 0.86rem;
+  line-height: 1.55;
+}
+
+.code code,
+.prose pre code {
+  font-size: inherit;
+}
+
+/* File sheet */
+.breadcrumb {
+  margin: 0 0 18px;
+  font-size: 0.92rem;
+  color: var(--line-soft);
+  word-break: break-word;
+}
+
+.spec {
+  margin: 0 0 28px;
+  border: 1.5px solid var(--line-soft);
+}
+
+.spec > div {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+}
+
+.spec > div + div {
+  border-top: 1px solid var(--line-faint);
+}
+
+.spec dt {
+  padding: 10px 12px;
+  border-right: 1px solid var(--line-faint);
+  font-family: var(--display);
+  font-weight: 600;
+  color: var(--cyan);
+}
+
+.spec dd {
+  margin: 0;
+  padding: 10px 14px;
+}
+
+.prose {
+  max-width: 76ch;
+}
+
+.prose h1 {
+  font-size: clamp(2rem, 4.5vw, 2.8rem);
+  margin: 0 0 18px;
+}
+
+.prose h2 {
+  font-size: 1.6rem;
+  margin: 36px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--line-faint);
+}
+
+.prose h3 {
+  font-size: 1.3rem;
+  margin: 26px 0 8px;
+}
+
+.prose p,
+.prose ul,
+.prose ol {
+  margin: 0 0 14px;
+}
+
+.prose li + li {
+  margin-top: 4px;
+}
+
+.prose strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+.prose :not(pre) > code {
+  padding: 1px 5px;
+  background: rgb(232 240 255 / 0.1);
+  border-radius: 2px;
+  color: var(--cyan);
+}
+
+.prose pre {
+  margin: 0 0 18px;
+}
+
+.prose table {
+  width: 100%;
+  margin: 0 0 18px;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  display: block;
+  overflow-x: auto;
+}
+
+.prose th,
+.prose td {
+  padding: 8px 10px;
+  border: 1px solid var(--line-faint);
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose th {
+  font-family: var(--display);
+  font-size: 1.02rem;
+  color: var(--line-soft);
+}
+
+.prose blockquote {
+  margin: 0 0 14px;
+  padding: 4px 16px;
+  border-left: 3px solid var(--redline);
+  color: var(--line-soft);
+}
+
+.source {
+  margin-top: 36px;
+  font-size: 0.92rem;
+}
+
+/* Title block: the drawing's signature, bottom of every sheet. */
+.title-block {
+  display: grid;
+  grid-template-columns: 1.4fr 2fr 0.7fr 0.7fr 0.9fr;
+  border-top: 2px solid var(--line);
+}
+
+.tb-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  padding: 10px 14px;
+  border-left: 1px solid var(--line-soft);
+}
+
+.tb-cell:first-child {
+  border-left: 0;
+}
+
+.tb-cell span {
+  font-size: 0.74rem;
+  color: var(--line-soft);
+}
+
+.tb-cell strong {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.15rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .drawing {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+    padding: 16px 16px 32px;
+  }
+
+  .index {
+    position: static;
+    max-height: none;
+  }
+
+  .index-sheets {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 12px;
+  }
+
+  .index-sheets > li + li {
+    border-top: 0;
+  }
+
+  /* The plugin sheet and the breadcrumb carry file navigation on small screens. */
+  .index-files {
+    display: none;
+  }
+
+  .sheet {
+    min-height: 0;
+  }
+
+  .sheet-body {
+    padding: 28px 18px 36px;
+  }
+
+  .title-block {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .tb-cell {
+    border-left: 0;
+    border-top: 1px solid var(--line-faint);
+  }
+
+  .tb-title {
+    grid-column: 1 / -1;
+  }
+
+  .schedule thead {
+    display: none;
+  }
+
+  .schedule,
+  .schedule tbody,
+  .schedule tr,
+  .schedule td {
+    display: block;
+    width: 100%;
+  }
+
+  .schedule tr {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line-faint);
+  }
+
+  .schedule td {
+    border: 0;
+    padding: 2px 0;
+  }
+
+  .schedule td.num {
+    display: none;
+  }
+
+  .spec > div {
+    grid-template-columns: 1fr;
+  }
+
+  .spec dt {
+    border-right: 0;
+    padding-bottom: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+  }
+}

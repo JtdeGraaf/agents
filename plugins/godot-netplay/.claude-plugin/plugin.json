@@ -1,0 +1,12 @@
+{
+  "name": "godot-netplay",
+  "displayName": "Godot Netplay",
+  "version": "1.0.0",
+  "description": "Multiplayer games: an engine-free .NET host library plus a Godot C# client that only renders and wires.",
+  "author": { "name": "Jt de Graaf", "url": "https://agents.graaf.dev" },
+  "homepage": "https://agents.graaf.dev/#godot-netplay",
+  "repository": "https://github.com/JtdeGraaf/agents",
+  "license": "MIT",
+  "keywords": ["godot", "csharp", "dotnet", "multiplayer", "architecture"],
+  "dependencies": ["house-style"]
+}

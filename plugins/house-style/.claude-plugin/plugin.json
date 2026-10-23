@@ -1,0 +1,11 @@
+{
+  "name": "house-style",
+  "displayName": "House Style",
+  "version": "1.0.0",
+  "description": "Language-agnostic house style: flat control flow, rare short comments, coded errors, no silent defaults, deliberate tests.",
+  "author": { "name": "Jt de Graaf", "url": "https://agents.graaf.dev" },
+  "homepage": "https://agents.graaf.dev/#house-style",
+  "repository": "https://github.com/JtdeGraaf/agents",
+  "license": "MIT",
+  "keywords": ["style", "control-flow", "comments", "testing", "errors"]
+}

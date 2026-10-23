@@ -1,0 +1,12 @@
+{
+  "name": "react-slices",
+  "displayName": "React Slices",
+  "version": "1.0.0",
+  "description": "React + TypeScript SPAs by responsibility: thin routes, feature slices, generated API client, components that only render.",
+  "author": { "name": "Jt de Graaf", "url": "https://agents.graaf.dev" },
+  "homepage": "https://agents.graaf.dev/#react-slices",
+  "repository": "https://github.com/JtdeGraaf/agents",
+  "license": "MIT",
+  "keywords": ["react", "typescript", "tanstack", "tailwind", "architecture"],
+  "dependencies": ["house-style"]
+}

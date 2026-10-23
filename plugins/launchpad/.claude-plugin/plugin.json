@@ -1,0 +1,11 @@
+{
+  "name": "launchpad",
+  "displayName": "Launchpad",
+  "version": "1.0.0",
+  "description": "Ship a frontend-only app from one prompt: idea, unique design, GitHub repo, Cloudflare deploy on <slug>.graaf.dev.",
+  "author": { "name": "Jt de Graaf", "url": "https://agents.graaf.dev" },
+  "homepage": "https://agents.graaf.dev/#launchpad",
+  "repository": "https://github.com/JtdeGraaf/agents",
+  "license": "MIT",
+  "keywords": ["workflow", "cloudflare", "deploy", "vite", "impeccable"]
+}
