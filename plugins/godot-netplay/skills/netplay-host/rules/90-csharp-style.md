@@ -39,6 +39,7 @@ public void Finish(PlayerId playerId)
 
 ## Comments
 
+- One short sentence in plain, everyday English, no jargon (house-style comments rule).
 - Doc comments are `///` XML: `/// <summary>…</summary>`. Never `/** */`.
 - Reference code with `<see cref="Round.TryReact"/>`, inline names with `<c>content.json</c>`.
 - `<param>` / `<returns>` / `<exception>` only when they add something:

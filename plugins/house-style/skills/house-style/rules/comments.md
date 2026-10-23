@@ -1,7 +1,22 @@
-# Rule: Comments — rare, short (NON-NEGOTIABLE)
+# Rule: Comments — rare, short, plain English (NON-NEGOTIABLE)
 
 Most code needs **no comment**. The name says what, the code says how. A comment earns its place only by carrying
 information the code cannot: a *why*, a constraint, a unit, a domain rule, a deliberate trade-off, a trap.
+
+## Plain, concise English
+
+Write a comment the way you'd say it to a colleague at your desk: **one short sentence, everyday words.**
+
+- No jargon, no buzzwords, no marketing tone: not *leverages, ensures, facilitates, robust, seamless,
+  comprehensive, utilizes, in order to*.
+- No filler: drop *this function*, *basically*, *note that*, *it is important to*.
+- No emoji, no exclamation marks, no headings or bullet lists inside code comments.
+
+| Don't | Do |
+|---|---|
+| `// This method leverages the cache to ensure robust and performant retrieval of user data.` | `// Cached: the profile API is slow.` |
+| `// Utilize a comprehensive validation strategy to facilitate data integrity.` | nothing — the code validates; that's obvious |
+| `// Note: it is important to call init() first in order to properly set up the connection!` | `// Call init() first, or send() throws.` |
 
 ## Syntax
 

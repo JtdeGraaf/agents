@@ -1,6 +1,6 @@
 ---
 name: house-style
-description: Jt's language-agnostic house style for writing, refactoring and reviewing code in any language or project. Flat control flow with guard clauses, rare one-line comments, coded and localisable errors, no silent defaults on deserialized data, value objects over primitives, deliberate behaviour-level tests, confirmation before destructive actions, conventional commits. Use whenever writing or reviewing code; stack plugins (spring-slices, react-slices, godot-netplay) add language-specific rules on top.
+description: Jt's language-agnostic house style for writing, refactoring and reviewing code in any language or project. Human-readable code - self-explanatory plain-English names with no jargon or AI buzzwords, rare concise plain-English comments, flat control flow with guard clauses, coded and localisable errors, no silent defaults on deserialized data, value objects over primitives, deliberate behaviour-level tests, confirmation before destructive actions, conventional commits. Use whenever writing or reviewing code; stack plugins (spring-slices, react-slices, godot-netplay) add language-specific rules on top.
 ---
 
 # House style
@@ -13,6 +13,7 @@ Read the rule that matches what you're doing **before** you do it:
 
 | Doing | Read |
 |---|---|
+| Naming anything: class, method, variable, file | [rules/naming.md](rules/naming.md) |
 | Writing any function or method | [rules/control-flow.md](rules/control-flow.md) |
 | Adding or editing a comment | [rules/comments.md](rules/comments.md) |
 | Modelling data, ids, money, limits, anything with rules | [rules/domain-modelling.md](rules/domain-modelling.md) |
@@ -24,9 +25,15 @@ Read the rule that matches what you're doing **before** you do it:
 
 ## The short version
 
+**Code is for humans, not for AI.** A new teammate should understand it on first read, without context.
+
+- **Names say what things are and do, in plain everyday English.** Use the product's own words. No jargon, no
+  buzzwords (*manager, processor, orchestrator, leverage, robust, seamless…*), no cryptic abbreviations. If a name
+  needs a comment, rename it.
+- **Comments are rare, short and plain.** One sentence, everyday words, only what the code can't say: a why, a
+  unit, a rule, a trap. Delete the rest.
 - **Happy path flat and last.** Guards exit early; no `else` after `return`/`throw`; more than ~2 levels of
   nesting is a defect.
-- **Comments are rare and short.** Only what the code can't say: a why, a unit, a rule, a trap. Delete the rest.
 - **Push rules into the type that owns the data.** Value objects that validate themselves; entities that refuse
   illegal transitions; no primitive obsession.
 - **Thin edges.** Whatever receives a request (controller, route, packet handler, UI node) makes one call and

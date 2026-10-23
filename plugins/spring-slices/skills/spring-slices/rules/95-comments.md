@@ -1,7 +1,7 @@
 # Rule: Comments — rare, short, markdown `///` (NON-NEGOTIABLE)
 
-What earns a comment is in the house-style comments rule: a *why*, a unit, a domain rule, a trap. This file pins the
-Java syntax.
+What earns a comment is in the house-style comments rule: a *why*, a unit, a domain rule, a trap — written as one
+short sentence in plain, everyday English, no jargon. This file pins the Java syntax.
 
 ## Syntax: markdown doc comments (`///`)
 
