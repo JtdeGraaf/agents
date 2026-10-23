@@ -1,6 +1,6 @@
 ---
 name: ship-app
-description: Turn a one-prompt idea for any frontend-only web app (a tool, toy, game, utility, visualizer, joke, or something useful) into a finished, deployed app with its own unique visual identity. Works out the idea, designs it with Impeccable, builds it (Vite + React + TS), creates a GitHub repo under JtdeGraaf, deploys it to Cloudflare Workers static assets, and attaches the custom domain <slug>.graaf.dev (DNS + TLS handled by Cloudflare). Sets up GitHub Actions so later pushes to main redeploy. Use when the user says "ship-app", "ship this idea", "build and deploy an app for ...", "make me an app that ...", or gives an app idea and wants it live on graaf.dev.
+description: Turn a one-prompt idea for any frontend-only web app (a tool, toy, game, utility, visualizer, joke, or something useful) into a finished, deployed app with its own unique visual identity. Works out the idea, designs it with Impeccable, builds it (Vite + React + TS) to Jt's house-style and react-slices code standards, creates a GitHub repo under JtdeGraaf, deploys it to Cloudflare Workers static assets, and attaches the custom domain <slug>.graaf.dev (DNS + TLS handled by Cloudflare). Sets up GitHub Actions so later pushes to main redeploy. Use when the user says "ship-app", "ship this idea", "build and deploy an app for ...", "make me an app that ...", or gives an app idea and wants it live on graaf.dev.
 argument-hint: <app idea> [name=<slug>] [private] [pick-style]
 ---
 
@@ -71,7 +71,78 @@ cd <slug> && npm install
 
 If create-vite still prompts or rejects `--no-interactive`, write the minimal Vite React-TS files by hand instead (package.json, vite.config.ts, tsconfig.json, index.html, src/main.tsx, src/App.tsx). Do not leave a hanging interactive process.
 
-Add Wrangler as dev dep: `npm i -D wrangler@latest`.
+Add dev deps: `npm i -D wrangler@latest vitest@latest`. Scripts in `package.json`:
+
+```json
+"typecheck": "tsc -b",
+"test": "vitest run --passWithNoTests",
+"build": "tsc -b && vite build",
+"deploy": "npm run build && wrangler deploy"
+```
+
+## Step 2b — Code standards (NON-NEGOTIABLE)
+
+The README says "ignore the code", but the code still meets Jt's standards. **Before writing any code, load the
+`house-style:house-style` and `react-slices:react-slices` skills** (Skill tool) and read the rule files named below.
+They install with this plugin; if either is missing, install it (`claude plugin install house-style@graaf
+react-slices@graaf`) or read it from `https://github.com/JtdeGraaf/agents/tree/main/plugins`.
+
+**house-style applies in full**, especially:
+- `naming.md` — every name self-explanatory plain English, no jargon or AI buzzwords. Code is for humans.
+- `comments.md` — rare, one short plain-English sentence, only the *why*.
+- `control-flow.md` — guards first, happy path flat, no `else` after an exit.
+- `no-silent-defaults.md` — anything read from `localStorage`, a URL or a public API is parsed and checked; a bad
+  or missing value falls back on purpose, never by accident.
+- `domain-modelling.md`, `testing.md`, `irreversible-actions.md`, `commits.md`.
+
+**react-slices, scaled to a small frontend-only app:**
+
+| Rule | In a ship-app app |
+|---|---|
+| `00-structure` | Yes: `components/`, `lib/`, and `features/<x>/` once there's more than one concept. No `api/generated/`. |
+| `45-component-responsibility` | Yes, fully: components render; logic lives in hooks and pure `lib/` functions. |
+| `46-destructive-actions` | Yes: clearing data, resetting progress, deleting items ask first. |
+| `50-styling` | Yes, with whatever styling the design uses: colours, fonts and spacing are tokens (CSS custom properties or Tailwind `@theme`), never inline hex in components. |
+| `80-tests` | Yes: Vitest unit tests for every pure `lib/` function with real logic (scoring, parsing, calculations). Add an RTL test only for a core flow with real branching. |
+| `90-control-flow` | Yes. |
+| `30-api` | Only the idea: calls to a public API live in one `lib/<service>.ts` module, never `fetch` inside components. |
+| `10-routes`, `20-features` data hooks, `60-forms`, `70-i18n` | Only if the app actually has several pages, server data, real forms or more than one language. Don't add a router, query client or i18n to a one-screen app. |
+
+**Self-review before Step 4:** reread every file you wrote against `naming.md`, `comments.md` and
+`45-component-responsibility.md`. Rename anything vague, cut any comment that restates the code, and move logic out
+of components. `npm run typecheck && npm test && npm run build` must all pass.
+
+**Leave the standards in the repo** so later edits follow them too:
+
+- `CLAUDE.md`:
+  ```markdown
+  # <App name>
+
+  Frontend-only Vite + React + TypeScript app, deployed to https://<slug>.graaf.dev (Cloudflare Workers; pushes to main deploy).
+
+  Follow the `house-style` and `react-slices` skills from the `graaf` marketplace (JtdeGraaf/agents), scaled to a
+  small frontend-only app: plain-English names, components only render, logic in `lib/` with tests. No backend.
+  Verify with `npm run typecheck && npm test && npm run build`.
+  ```
+- `.claude/settings.json`, so anyone who opens the repo in Claude Code (and trusts the folder) gets the plugins.
+  Write it with the CLI from the project root:
+  ```bash
+  claude plugin marketplace add JtdeGraaf/agents --scope project
+  claude plugin install house-style@graaf --scope project
+  claude plugin install react-slices@graaf --scope project
+  ```
+  It must end up as (write it by hand only if the CLI fails):
+  ```json
+  {
+    "extraKnownMarketplaces": {
+      "graaf": { "source": { "source": "github", "repo": "JtdeGraaf/agents" } }
+    },
+    "enabledPlugins": {
+      "house-style@graaf": true,
+      "react-slices@graaf": true
+    }
+  }
+  ```
 
 ## Step 3 — Design + build with Impeccable (unique identity per app)
 
@@ -87,12 +158,12 @@ Every app gets its own visual world. No two ship-app apps may look alike, and no
 4. **Finish passes:** run Impeccable's finish reviewer (`impeccable-finish-reviewer` subagent) with desktop + mobile screenshots, apply its material fixes, max two rounds (unattended budget). Then run `impeccable-documenter` so the repo gets a `DESIGN.md`.
 5. **Append to the design log** (one entry, format in that file) once the design is final. If the log is missing, recreate it with entries of: `## <slug> — <date>`, idea, world, palette (hex), type, signature move, mode.
 
-Build rules on top of Impeccable's:
+Build rules on top of Impeccable's (and the code standards in Step 2b):
 - Replace Vite boilerplate entirely (delete `src/assets/react.svg`, `public/vite.svg`, default counter, default CSS).
 - Set `<title>`, meta description, theme-color, and an inline SVG/emoji favicon in `index.html`.
 - Mobile-first, works at 360px wide, keyboard accessible, respects `prefers-reduced-motion`.
 - Keep deps minimal; no UI kits unless they clearly earn it.
-- `npm run build` must pass with zero TS errors.
+- `npm run typecheck && npm test && npm run build` must all pass.
 - Run it (`npm run dev` in background or `npx vite preview`) and check it in the built-in browser: core loop works, no console errors, mobile width OK. Fix before deploying.
 
 ## Step 4 — Cloudflare config
@@ -120,13 +191,7 @@ Create `wrangler.jsonc` in project root:
 
 `custom_domain: true` makes Cloudflare create the DNS record on the `graaf.dev` zone and issue the TLS cert automatically. No manual DNS calls needed. If deploy fails because a DNS record for that hostname already exists, stop and tell user (don't delete their records).
 
-Add scripts to `package.json`:
-
-```json
-"deploy": "npm run build && wrangler deploy"
-```
-
-Add `.wrangler/` and `.impeccable/` (design-hook cache) to `.gitignore`. Before the first commit, check `git status --short` and ignore any other tool caches that show up.
+The `deploy` script was added in Step 2. Add `.wrangler/` and `.impeccable/` (design-hook cache) to `.gitignore`. Before the first commit, check `git status --short` and ignore any other tool caches that show up.
 
 ## Step 5 — GitHub Actions auto-deploy (required)
 
@@ -153,6 +218,8 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
       - run: npm run build
       - uses: cloudflare/wrangler-action@v3
         with:
@@ -178,7 +245,7 @@ Then: title, live URL, spec from Step 1, `npm run dev` / `npm run deploy` usage,
 ```bash
 git init -b main
 git add -A
-git commit -m "Initial commit: <one-line pitch>"
+git commit -m "feat: <one-line pitch in plain English>"
 gh repo create JtdeGraaf/<slug> --public --source . --remote origin --description "[one-prompt app] <pitch> — https://<slug>.graaf.dev" --homepage "https://<slug>.graaf.dev"
 ```
 (`--private` instead of `--public` if args say `private`.)
@@ -231,6 +298,7 @@ git push -u origin main
 - Local: `~/apps/<slug>`
 - What was built (pitch + features, 3–5 lines)
 - Design direction in one line (world, palette, type) and Impeccable reviewer verdict, open items included
+- Code standards: self-review done, typecheck + tests + build green (say how many tests)
 - Anything that failed or was skipped, stated plainly
 
 ## Teardown (only when user asks)
