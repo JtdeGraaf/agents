@@ -1,0 +1,12 @@
+{
+  "name": "orchestrator",
+  "displayName": "Orchestrator",
+  "version": "1.0.0",
+  "description": "An improvement loop for a deployed app: a scout files GitHub issues, one visible session per issue fixes and ships it, repeat.",
+  "author": { "name": "Jt de Graaf", "url": "https://agents.graaf.dev" },
+  "homepage": "https://agents.graaf.dev/#orchestrator",
+  "repository": "https://github.com/JtdeGraaf/agents",
+  "license": "MIT",
+  "keywords": ["workflow", "loop", "github-issues", "sessions", "ci"],
+  "dependencies": ["house-style"]
+}

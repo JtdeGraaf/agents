@@ -35,6 +35,12 @@
       "source": "./plugins/launchpad",
       "description": "Ship a frontend-only app from one prompt: idea, unique design, GitHub repo, Cloudflare deploy on <slug>.graaf.dev.",
       "category": "workflows"
+    },
+    {
+      "name": "orchestrator",
+      "source": "./plugins/orchestrator",
+      "description": "An improvement loop for a deployed app: a scout files GitHub issues, one visible session per issue fixes and ships it, repeat.",
+      "category": "workflows"
     }
   ]
 }

@@ -25,6 +25,7 @@ Inside a session: `/plugin marketplace add JtdeGraaf/agents`, then `/plugin` to 
 | `react-slices` | `react-slices` | React + TypeScript SPAs by responsibility, generated API client, typed i18n |
 | `godot-netplay` | `netplay-host`, `godot-client` | Multiplayer games: engine-free .NET host library + Godot C# client |
 | `launchpad` | `ship-app` | One prompt → designed, deployed frontend app on `<slug>.graaf.dev` |
+| `orchestrator` | `orchestrator` | Improvement loop: a scout files GitHub issues, one visible session per issue fixes and deploys it, repeat |
 
 Guidelines describe *how* I design software — layering, boundaries, style — not any one project's internals. A
 project's own `CLAUDE.md` / `.claude/rules/` always win over these.
