@@ -1,7 +1,7 @@
 {
   "name": "launchpad",
   "displayName": "Launchpad",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Ship a frontend-only app from one prompt: idea, unique design, GitHub repo, Cloudflare deploy on <slug>.graaf.dev.",
   "author": {
     "name": "Jt de Graaf",
